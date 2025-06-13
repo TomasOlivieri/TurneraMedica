@@ -1,12 +1,13 @@
 package turneramedica;
 
-import java.sql.SQLException;
-import turneramedica.Entidades.Medico;
-import turneramedica.Persistencia.DAOMedico;
+import turneramedica.View.PantallaInicio;
 
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("hola mundo");
+        
+        PantallaInicio pi = new PantallaInicio();
+        pi.setVisible(true);
+        
     }
 }
