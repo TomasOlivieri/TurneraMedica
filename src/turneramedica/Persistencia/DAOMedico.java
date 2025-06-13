@@ -30,6 +30,7 @@ public class DAOMedico implements ICRUD<Medico>{
             peparedStatmenet.setInt(4,elemento.getCosto());
             int result=peparedStatmenet.executeUpdate();
             System.out.println("Medico guardado exitosamente:"+result);
+            peparedStatmenet.close();
     }
 
     @Override
@@ -44,14 +45,59 @@ public class DAOMedico implements ICRUD<Medico>{
     }
 
     @Override
-    public Medico buscar(int id)  throws SQLException, ClassNotFoundException {
-        Medico retorno = new Medico ("1", "tomas", "olivieri", 1000);
-        return retorno;
+    public Medico buscar(String id) throws SQLException, ClassNotFoundException {
+        String ida;
+        String nombre;
+        String apellido;
+        int costo;
+        Medico aux = null;
+        
+        Connection connection=null;
+        PreparedStatement peparedStatmenet=null;
+        Medico mediocAux=null;
+        Class.forName(DB_JDBC_DRIVER);
+        connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        peparedStatmenet = connection.prepareStatement("SELECT * FROM MEDICO WHERE ID=?");
+        peparedStatmenet.setString(1,id);
+        ResultSet rs= peparedStatmenet.executeQuery();
+        if (rs.next()) {
+            ida = rs.getString("id");
+            nombre = rs.getString("nombre");
+            apellido = rs.getString("apellido");
+            costo = rs.getInt("costo");
+            aux = new Medico (ida, nombre, apellido, costo);
+        }
+        peparedStatmenet.close();
+        return aux;
     }
 
 
     public ArrayList<Medico> buscarTodos() throws SQLException, ClassNotFoundException {
-        ArrayList retorno = new ArrayList<Medico>();
-        return retorno;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        
+        Medico medico = null;
+        ArrayList<Medico> medicos = new ArrayList<>();
+        
+        String id;
+        String nombre;
+        String apellido;
+        int costo;
+        
+        Class.forName(DB_JDBC_DRIVER);
+        connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        preparedStatement = connection.prepareStatement("SELECT * FROM MEDICO");
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()){
+            id = rs.getString("id");
+            nombre = rs.getString("nombre");
+            apellido = rs.getString("apellido");
+            costo = rs.getInt("costo");
+            medico = new Medico (id, nombre, apellido, costo);
+            
+            medicos.add(medico);
+        }
+        preparedStatement.close();
+        return medicos;
     }
 }
