@@ -1,12 +1,13 @@
 package turneramedica.Persistencia;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-public interface ICRUD <T>{
-    public void guardar(T elemento);
-    public void modificar(T elemento);
-    public void eliminar(int id);
-    public T buscar(int id);
-    public ArrayList<T> buscarTodos();
+public interface ICRUD <T> {
+    public void guardar(T elemento) throws SQLException, ClassNotFoundException;
+    public void modificar(T elemento) throws SQLException, ClassNotFoundException;
+    public void eliminar(int id) throws SQLException, ClassNotFoundException;
+    public T buscar(int id) throws SQLException, ClassNotFoundException;
+    public ArrayList<T> buscarTodos() throws SQLException, ClassNotFoundException;
 }

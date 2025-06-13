@@ -8,4 +8,13 @@ public class Medico extends Persona{
         super(id, nombre, apellido);
         this.costo = costo;
     }
+    
+    
+    public int getCosto () {
+        return this.costo;
+    }
+    
+    public void setCosto (int costo) {
+        this.costo = costo;
+    }
 }
