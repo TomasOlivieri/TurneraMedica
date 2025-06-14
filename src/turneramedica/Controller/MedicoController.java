@@ -16,4 +16,14 @@ public class MedicoController {
     public List<Medico> obtenerTodosLosMedicos() throws ClassNotFoundException, SQLException {
         return daomedico.buscarTodos();
     }
+        
+    public void eliminarMedicoPorId(String id) throws SQLException, ClassNotFoundException {
+        daomedico.eliminar(id);
+    }
+    
+    public void guardarMedico(Medico medico) throws SQLException, ClassNotFoundException {
+        daomedico.guardar(medico);
+    }
+
+
 }

@@ -2,15 +2,12 @@ package turneramedica.View;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import turneramedica.Controller.MedicoController;
-import turneramedica.Entidades.Medico;
+
 
 public class PantallaInicio extends JFrame {
     MedicoController medicoController;
+    JPanel panel;
     
     public PantallaInicio() {
         medicoController = new MedicoController();
@@ -18,21 +15,34 @@ public class PantallaInicio extends JFrame {
         setTitle("Turnera Médica");
         setSize(400,200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null);  
+        
+        JPanel panel = new JPanel();
+
         
         JButton btnMostrarMedicos = new JButton("Mostrar médicos disponibles");       
+        JButton btnAgregarMedico = new JButton("Agregar Médico");
         
         btnMostrarMedicos.addActionListener(e -> {
         try {
-            ArrayList<Medico> medicos = (ArrayList<Medico>) medicoController.obtenerTodosLosMedicos();
-            VentanaMedicos ventanaMedicos = new VentanaMedicos(medicos);
+            VentanaMedicos ventanaMedicos = new VentanaMedicos();
             ventanaMedicos.setVisible(true);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error al obtener médicos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         });
         
-        setLayout(new BorderLayout());
-        add(btnMostrarMedicos, BorderLayout.CENTER);
+        
+        btnAgregarMedico.addActionListener(e -> {
+            VentanaAgregarMedico ventanaAgregar = new VentanaAgregarMedico(() -> {
+                this.setVisible(true);
+            });
+            ventanaAgregar.setVisible(true);
+            this.setVisible(false);
+        });
+        
+        panel.add(btnMostrarMedicos);
+        panel.add(btnAgregarMedico);
+        add(panel, BorderLayout.CENTER);
     }
 }

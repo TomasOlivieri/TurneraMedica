@@ -40,8 +40,13 @@ public class DAOMedico implements ICRUD<Medico>{
 
 
     @Override
-    public void eliminar(int id) throws SQLException, ClassNotFoundException {
-
+    public void eliminar(String id) throws SQLException, ClassNotFoundException {
+        Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        PreparedStatement ps = connection.prepareStatement("DELETE FROM MEDICO WHERE ID = ?");
+        ps.setString(1, id);
+        ps.executeUpdate();
+        ps.close();
+        connection.close();
     }
 
     @Override
