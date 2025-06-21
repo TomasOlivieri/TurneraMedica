@@ -1,9 +1,10 @@
 package turneramedicav2;
 
-public class Main {
+import javax.swing.SwingUtilities;
+import turneramedicav2.View.LoginFrame;
 
+public class Main {
     public static void main(String[] args) {
-        
+        SwingUtilities.invokeLater(() -> new LoginFrame().setVisible(true));
     }
-    
 }
